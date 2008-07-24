@@ -1,0 +1,3 @@
+gems:
+- name: Selenium
+  version: 1.0.9
