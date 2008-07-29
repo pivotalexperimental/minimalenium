@@ -2,7 +2,7 @@
 # http://cruisecontrolrb.thoughtworks.com/
 #   simple, ain't it
 
-Project.configure do |project|
+dProject.configure do |project|
   project.email_notifier.emails = ["jeremystellsmith@gmail.com"]
   project.build_command = "rake db:migrate default selenium_test --trace"
 end
