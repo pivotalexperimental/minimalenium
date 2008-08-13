@@ -25,9 +25,11 @@ end
 
 class SeleniumTest < Test::Unit::TestCase
   include SeleniumHelper
+  #fixtures :all
   
   def setup
     super
+    # ActiveRecord::Base.allow_concurrency = true
   end
   
   def default_test
