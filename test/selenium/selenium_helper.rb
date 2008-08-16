@@ -25,7 +25,7 @@ end
 
 class SeleniumTest < Test::Unit::TestCase
   include SeleniumHelper
-  #fixtures :all
+  fixtures :all
   
   def setup
     super
