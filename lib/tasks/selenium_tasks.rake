@@ -2,7 +2,7 @@ require 'test/unit'
 
 namespace :test do
   desc "Run tests for Selenium (automatically starts rails and selenium RC servers)"
-  task :selenium do 
+  task :selenium do
     begin
       # NOTE: must require selenium here instead of top of file, or else it will always set RAILS_ENV to test
       require File.dirname(__FILE__) + '/../../test/selenium/selenium_helper'
@@ -13,8 +13,8 @@ namespace :test do
       end
 
       Rake::Task["test:selenium_with_servers_started"].invoke
-  
-      Selenium::SeleniumBrowser.stop_browser
+
+      Selenium::SeleniumDriverManager.stop_driver
     rescue Exception => e
       puts e
       raise e
