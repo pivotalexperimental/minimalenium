@@ -1,7 +1,7 @@
-require File.dirname(__FILE__) + '/selenium_helper'
+require File.dirname(__FILE__) + '/selenium_test_case'
  
-class PostTest < SeleniumRails::SeleniumRailsTestCase
-  include Selenium::SeleniumHelper
+class PostTest < Selenium::TestCase
+  fixtures :all  
   
   def test_post
     browser.open "/posts"

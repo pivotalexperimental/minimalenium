@@ -4,6 +4,7 @@ namespace :test do
   desc "Run tests for Selenium (automatically starts rails and selenium RC servers)"
   task :selenium do
     require File.dirname(__FILE__) + '/../../test/selenium/selenium_helper'
+    require File.dirname(__FILE__) + '/../../test/selenium/servers_runner'
     SeleniumRails::ServersRunner.run_with_servers do
       Rake::Task["test:selenium_with_servers_started"].invoke
     end
