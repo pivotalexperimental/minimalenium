@@ -25,6 +25,7 @@ module Selenium
 
     def self.stop_driver
       @@selenium_driver.stop if @@selenium_driver
+      @@selenium_driver = nil
     end
   end
 
@@ -41,6 +42,30 @@ module Selenium
 end
 
 module SeleniumRails
+  class ServersRunner
+    def self.run_with_servers(&block)
+      begin
+        rails_server_process = IO.popen("ruby #{File.dirname(__FILE__) }/../../script/server --port=3001")
+        selenium_server = Selenium::SeleniumServer.new
+        unless selenium_server.running?
+          selenium_server_process = IO.popen("selenium")
+        end
+
+        yield
+
+        Selenium::SeleniumDriverManager.stop_driver
+      rescue Exception => e
+        puts e
+        raise e
+      ensure
+        puts "Killing rails server process at pid #{rails_server_process.pid}"
+        Process.kill(9,rails_server_process.pid)
+        puts "Killing selenium server"
+        selenium_server.stop
+      end
+    end
+  end
+  
   class SeleniumRailsTestCase < Selenium::SeleniumTestCase
     fixtures :all  
   end
