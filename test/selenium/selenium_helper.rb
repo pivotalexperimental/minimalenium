@@ -1,38 +1,43 @@
 require File.dirname(__FILE__) + '/../test_helper'
 require 'selenium'
 
-module SeleniumHelper
-  def browser
-    SeleniumBrowser.browser
-  end
-end
-
-class SeleniumBrowser
-  include SeleniumHelper
-  
-  def self.browser
-    unless $browser
-      $browser = Selenium::SeleniumDriver.new("localhost", 4444, "*firefox", "http://localhost:3001", 10000)
-      $browser.start
+module Selenium
+  module SeleniumHelper
+    def browser
+      SeleniumBrowser.browser
     end
-    $browser
   end
 
-  def self.stop_browser
-    $browser.stop if $browser
+  class SeleniumBrowser
+    cattr_reader :selenium_driver
+  
+    def self.browser
+      unless @@selenium_driver
+        @@selenium_driver = Selenium::SeleniumDriver.new("localhost", 4444, "*firefox", "http://localhost:3001", 10000)
+        @@selenium_driver.start
+      end
+      @@selenium_driver
+    end
+
+    def self.stop_browser
+      @@selenium_driver.stop if @@selenium_driver
+    end
+  end
+
+  class SeleniumTestCase < Test::Unit::TestCase
+    include SeleniumHelper
+
+    def setup
+      super
+    end
+  
+    def default_test
+    end
   end
 end
 
-class SeleniumTest < Test::Unit::TestCase
-  include SeleniumHelper
-  fixtures :all
-  
-  def setup
-    super
-    # ActiveRecord::Base.allow_concurrency = true
-  end
-  
-  def default_test
+module SeleniumRails
+  class SeleniumRailsTestCase < Selenium::SeleniumTestCase
+    fixtures :all  
   end
 end
-

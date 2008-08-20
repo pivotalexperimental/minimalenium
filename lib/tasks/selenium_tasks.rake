@@ -14,7 +14,7 @@ namespace :test do
 
       Rake::Task["test:selenium_with_servers_started"].invoke
   
-      SeleniumBrowser.stop_browser
+      Selenium::SeleniumBrowser.stop_browser
     rescue Exception => e
       puts e
       raise e
