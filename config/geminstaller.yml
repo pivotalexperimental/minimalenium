@@ -1,3 +1,5 @@
 gems:
 - name: Selenium
   version: 1.0.9
+- name: selenium-rails
+  version: 0.0.2
